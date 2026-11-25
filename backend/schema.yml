@@ -1,0 +1,2909 @@
+openapi: 3.0.3
+info:
+  title: One Day Job Portal API
+  version: 1.0.0
+  description: API documentation for Employee, Employer and Admin
+paths:
+  /accounts/forgot-password/:
+    post:
+      operationId: accounts_forgot_password_create
+      summary: Request password reset OTP
+      tags:
+      - Accounts - Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /accounts/login/:
+    post:
+      operationId: accounts_login_create
+      summary: Login and receive JWT tokens
+      tags:
+      - Accounts - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginSuccessResponse'
+          description: ''
+  /accounts/logout/:
+    post:
+      operationId: accounts_logout_create
+      summary: Logout and blacklist refresh token
+      tags:
+      - Accounts - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Logout'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/profile/:
+    post:
+      operationId: accounts_profile_create
+      summary: Get authenticated user profile
+      tags:
+      - Accounts - Profile
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/register/:
+    post:
+      operationId: accounts_register_create
+      summary: Register Employee or Employer
+      tags:
+      - Accounts - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterSuccessResponse'
+          description: ''
+  /accounts/resend-otp/:
+    post:
+      operationId: accounts_resend_otp_create
+      summary: Resend email verification OTP
+      tags:
+      - Accounts - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /accounts/resend-reset-otp/:
+    post:
+      operationId: accounts_resend_reset_otp_create
+      summary: Resend password reset OTP
+      tags:
+      - Accounts - Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResendOTP'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /accounts/reset-password/:
+    post:
+      operationId: accounts_reset_password_create
+      summary: Reset user password
+      tags:
+      - Accounts - Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /accounts/update-profile/:
+    post:
+      operationId: accounts_update_profile_create
+      summary: Update authenticated user profile
+      tags:
+      - Accounts - Profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Profile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/users/activate/:
+    post:
+      operationId: accounts_users_activate_create
+      summary: Activate user
+      tags:
+      - Accounts - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminActivateUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminActivateUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminActivateUserRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/users/deactivate/:
+    post:
+      operationId: accounts_users_deactivate_create
+      summary: Deactivate user
+      tags:
+      - Accounts - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminDeactivateUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminDeactivateUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminDeactivateUserRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/users/detail/:
+    post:
+      operationId: accounts_users_detail_create
+      summary: Get user details
+      tags:
+      - Accounts - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUserDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminUserDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminUserDetailRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/users/list/:
+    post:
+      operationId: accounts_users_list_create
+      summary: List and filter users
+      tags:
+      - Accounts - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUserListRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminUserListRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminUserListRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /accounts/verify-email/:
+    post:
+      operationId: accounts_verify_email_create
+      summary: Verify email OTP
+      tags:
+      - Accounts - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyOTP'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /accounts/verify-reset-otp/:
+    post:
+      operationId: accounts_verify_reset_otp_create
+      summary: Verify password reset OTP
+      tags:
+      - Accounts - Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyResetOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyResetOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyResetOTP'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /applications/applicant-details/:
+    post:
+      operationId: applications_applicant_details_create
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/applicants/:
+    post:
+      operationId: applications_applicants_create
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/apply/:
+    post:
+      operationId: applications_apply_create
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/cancel/{id}/:
+    post:
+      operationId: applications_cancel_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/complete/{id}/:
+    post:
+      operationId: applications_complete_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/details/:
+    post:
+      operationId: applications_details_create
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/hire/{id}/:
+    post:
+      operationId: applications_hire_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/my-applications/:
+    post:
+      operationId: applications_my_applications_create
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/reject/{id}/:
+    post:
+      operationId: applications_reject_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /applications/shortlist/{id}/:
+    post:
+      operationId: applications_shortlist_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/district/create/:
+    post:
+      operationId: common_district_create_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/district/delete/:
+    post:
+      operationId: common_district_delete_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/district/detail/:
+    post:
+      operationId: common_district_detail_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/district/list/:
+    post:
+      operationId: common_district_list_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/district/update/:
+    post:
+      operationId: common_district_update_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/education-level/create/:
+    post:
+      operationId: common_education_level_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationLevel'
+          description: ''
+  /common/education-level/delete/:
+    post:
+      operationId: common_education_level_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationLevel'
+          description: ''
+  /common/education-level/detail/:
+    post:
+      operationId: common_education_level_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationLevel'
+          description: ''
+  /common/education-level/list/:
+    post:
+      operationId: common_education_level_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationLevel'
+          description: ''
+  /common/education-level/update/:
+    post:
+      operationId: common_education_level_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EducationLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationLevel'
+          description: ''
+  /common/employment-type/create/:
+    post:
+      operationId: common_employment_type_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentType'
+          description: ''
+  /common/employment-type/delete/:
+    post:
+      operationId: common_employment_type_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentType'
+          description: ''
+  /common/employment-type/detail/:
+    post:
+      operationId: common_employment_type_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentType'
+          description: ''
+  /common/employment-type/list/:
+    post:
+      operationId: common_employment_type_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentType'
+          description: ''
+  /common/employment-type/update/:
+    post:
+      operationId: common_employment_type_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmploymentType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmploymentType'
+          description: ''
+  /common/experience-level/create/:
+    post:
+      operationId: common_experience_level_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperienceLevel'
+          description: ''
+  /common/experience-level/delete/:
+    post:
+      operationId: common_experience_level_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperienceLevel'
+          description: ''
+  /common/experience-level/detail/:
+    post:
+      operationId: common_experience_level_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperienceLevel'
+          description: ''
+  /common/experience-level/list/:
+    post:
+      operationId: common_experience_level_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperienceLevel'
+          description: ''
+  /common/experience-level/update/:
+    post:
+      operationId: common_experience_level_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExperienceLevel'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperienceLevel'
+          description: ''
+  /common/job-category/create/:
+    post:
+      operationId: common_job_category_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+          description: ''
+  /common/job-category/delete/:
+    post:
+      operationId: common_job_category_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+          description: ''
+  /common/job-category/detail/:
+    post:
+      operationId: common_job_category_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+          description: ''
+  /common/job-category/list/:
+    post:
+      operationId: common_job_category_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+          description: ''
+  /common/job-category/update/:
+    post:
+      operationId: common_job_category_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+          description: ''
+  /common/job-type/create/:
+    post:
+      operationId: common_job_type_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobType'
+          description: ''
+  /common/job-type/delete/:
+    post:
+      operationId: common_job_type_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobType'
+          description: ''
+  /common/job-type/detail/:
+    post:
+      operationId: common_job_type_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobType'
+          description: ''
+  /common/job-type/list/:
+    post:
+      operationId: common_job_type_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobType'
+          description: ''
+  /common/job-type/update/:
+    post:
+      operationId: common_job_type_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobType'
+          description: ''
+  /common/language/create/:
+    post:
+      operationId: common_language_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /common/language/delete/:
+    post:
+      operationId: common_language_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /common/language/detail/:
+    post:
+      operationId: common_language_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /common/language/list/:
+    post:
+      operationId: common_language_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /common/language/update/:
+    post:
+      operationId: common_language_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /common/location/create/:
+    post:
+      operationId: common_location_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /common/location/delete/:
+    post:
+      operationId: common_location_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /common/location/detail/:
+    post:
+      operationId: common_location_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /common/location/list/:
+    post:
+      operationId: common_location_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /common/location/update/:
+    post:
+      operationId: common_location_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /common/skill/create/:
+    post:
+      operationId: common_skill_create_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skill'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+          description: ''
+  /common/skill/delete/:
+    post:
+      operationId: common_skill_delete_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skill'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+          description: ''
+  /common/skill/detail/:
+    post:
+      operationId: common_skill_detail_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skill'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+          description: ''
+  /common/skill/list/:
+    post:
+      operationId: common_skill_list_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skill'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+          description: ''
+  /common/skill/update/:
+    post:
+      operationId: common_skill_update_create
+      tags:
+      - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Skill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Skill'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+          description: ''
+  /common/state/create/:
+    post:
+      operationId: common_state_create_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/state/delete/:
+    post:
+      operationId: common_state_delete_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/state/detail/:
+    post:
+      operationId: common_state_detail_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/state/list/:
+    post:
+      operationId: common_state_list_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/state/update/:
+    post:
+      operationId: common_state_update_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/taluka/create/:
+    post:
+      operationId: common_taluka_create_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/taluka/delete/:
+    post:
+      operationId: common_taluka_delete_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/taluka/detail/:
+    post:
+      operationId: common_taluka_detail_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/taluka/list/:
+    post:
+      operationId: common_taluka_list_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /common/taluka/update/:
+    post:
+      operationId: common_taluka_update_create
+      tags:
+      - common
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /dashboard/admin/:
+    post:
+      operationId: dashboard_admin_create
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /dashboard/employee/:
+    post:
+      operationId: dashboard_employee_create
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /dashboard/employer/:
+    post:
+      operationId: dashboard_employer_create
+      tags:
+      - dashboard
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/create/:
+    post:
+      operationId: employees_create_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/detail/:
+    post:
+      operationId: employees_detail_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/employees/activate/:
+    post:
+      operationId: employees_employees_activate_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/employees/deactivate/:
+    post:
+      operationId: employees_employees_deactivate_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/employees/detail/:
+    post:
+      operationId: employees_employees_detail_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/employees/list/:
+    post:
+      operationId: employees_employees_list_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employees/update/:
+    post:
+      operationId: employees_update_create
+      tags:
+      - employees
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/create/:
+    post:
+      operationId: employers_create_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/detail/:
+    post:
+      operationId: employers_detail_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_activate/:
+    post:
+      operationId: employers_employers_activate_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_deactivate/:
+    post:
+      operationId: employers_employers_deactivate_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_detail/:
+    post:
+      operationId: employers_employers_detail_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_list/:
+    post:
+      operationId: employers_employers_list_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_reject/:
+    post:
+      operationId: employers_employers_reject_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/employers_verify/:
+    post:
+      operationId: employers_employers_verify_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /employers/update/:
+    post:
+      operationId: employers_update_create
+      tags:
+      - employers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/approve/:
+    post:
+      operationId: jobs_admin_approve_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/feature/:
+    post:
+      operationId: jobs_admin_feature_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/pending/:
+    post:
+      operationId: jobs_admin_pending_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/published/:
+    post:
+      operationId: jobs_admin_published_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/reject/:
+    post:
+      operationId: jobs_admin_reject_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/admin/urgent/:
+    post:
+      operationId: jobs_admin_urgent_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/cancel/:
+    post:
+      operationId: jobs_cancel_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/close/:
+    post:
+      operationId: jobs_close_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/closed/:
+    post:
+      operationId: jobs_closed_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/create/:
+    post:
+      operationId: jobs_create_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/delete/:
+    post:
+      operationId: jobs_delete_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/detail/:
+    post:
+      operationId: jobs_detail_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/draft-jobs/:
+    post:
+      operationId: jobs_draft_jobs_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/featured/:
+    post:
+      operationId: jobs_featured_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/filter/:
+    post:
+      operationId: jobs_filter_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/hard-delete/:
+    post:
+      operationId: jobs_hard_delete_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/list/:
+    post:
+      operationId: jobs_list_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/my-jobs/:
+    post:
+      operationId: jobs_my_jobs_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/nearby/:
+    post:
+      operationId: jobs_nearby_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/payment-pending/:
+    post:
+      operationId: jobs_payment_pending_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/pending-approval/:
+    post:
+      operationId: jobs_pending_approval_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/public-detail/:
+    post:
+      operationId: jobs_public_detail_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/published/:
+    post:
+      operationId: jobs_published_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/rejected/:
+    post:
+      operationId: jobs_rejected_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/search/:
+    post:
+      operationId: jobs_search_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/update/:
+    post:
+      operationId: jobs_update_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /jobs/urgent/:
+    post:
+      operationId: jobs_urgent_create
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /notifications/mark-all-read/:
+    post:
+      operationId: notifications_mark_all_read_create
+      tags:
+      - notifications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /notifications/mark-read/:
+    post:
+      operationId: notifications_mark_read_create
+      tags:
+      - notifications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /notifications/my/:
+    get:
+      operationId: notifications_my_retrieve
+      tags:
+      - notifications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /notifications/unread-count/:
+    get:
+      operationId: notifications_unread_count_retrieve
+      tags:
+      - notifications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/create/:
+    post:
+      operationId: packages_create_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/delete/:
+    post:
+      operationId: packages_delete_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/details/:
+    post:
+      operationId: packages_details_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/employee-packages/:
+    post:
+      operationId: packages_employee_packages_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/employer-packages/:
+    post:
+      operationId: packages_employer_packages_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/list/:
+    post:
+      operationId: packages_list_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/toggle-status/:
+    post:
+      operationId: packages_toggle_status_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /packages/update/:
+    post:
+      operationId: packages_update_create
+      tags:
+      - packages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /payments/create-order/:
+    post:
+      operationId: payments_create_order_create
+      tags:
+      - payments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /payments/employee/history/:
+    post:
+      operationId: payments_employee_history_create
+      tags:
+      - payments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /payments/employer/history/:
+    post:
+      operationId: payments_employer_history_create
+      tags:
+      - payments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /payments/razorpay/webhook/:
+    post:
+      operationId: payments_razorpay_webhook_create
+      tags:
+      - payments
+      responses:
+        '200':
+          description: No response body
+  /payments/verify/:
+    post:
+      operationId: payments_verify_create
+      tags:
+      - payments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /reviews/create/:
+    post:
+      operationId: reviews_create_create
+      tags:
+      - reviews
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /reviews/details/{id}/:
+    get:
+      operationId: reviews_details_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - reviews
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /reviews/list/:
+    get:
+      operationId: reviews_list_retrieve
+      tags:
+      - reviews
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/cancel-employee/:
+    post:
+      operationId: subscriptions_admin_cancel_employee_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/cancel-employer/:
+    post:
+      operationId: subscriptions_admin_cancel_employer_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/employee-detail/:
+    post:
+      operationId: subscriptions_admin_employee_detail_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/employee-list/:
+    post:
+      operationId: subscriptions_admin_employee_list_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/employer-detail/:
+    post:
+      operationId: subscriptions_admin_employer_detail_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/admin/employer-list/:
+    post:
+      operationId: subscriptions_admin_employer_list_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employee/buy-package/:
+    post:
+      operationId: subscriptions_employee_buy_package_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employee/current-package/:
+    post:
+      operationId: subscriptions_employee_current_package_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employee/history/:
+    post:
+      operationId: subscriptions_employee_history_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employer/buy-package/:
+    post:
+      operationId: subscriptions_employer_buy_package_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employer/current-package/:
+    post:
+      operationId: subscriptions_employer_current_package_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /subscriptions/employer/history/:
+    post:
+      operationId: subscriptions_employer_history_create
+      tags:
+      - subscriptions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    AdminActivateUserRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+      required:
+      - user_id
+    AdminDeactivateUserRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+      required:
+      - user_id
+    AdminUserDetailRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+      required:
+      - user_id
+    AdminUserListRequest:
+      type: object
+      properties:
+        search:
+          type: string
+        role:
+          type: string
+        is_active:
+          type: boolean
+        is_email_verified:
+          type: boolean
+        is_mobile_verified:
+          type: boolean
+        page:
+          type: integer
+        page_size:
+          type: integer
+    BlankEnum:
+      enum:
+      - ''
+    EducationLevel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        display_order:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    EmploymentType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    ExperienceLevel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        min_year:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+        max_year:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+          nullable: true
+        display_order:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    ForgotPassword:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    GenderEnum:
+      enum:
+      - MALE
+      - FEMALE
+      - OTHER
+      type: string
+      description: |-
+        * `MALE` - Male
+        * `FEMALE` - Female
+        * `OTHER` - Other
+    JobCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    JobType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    Language:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        taluka_name:
+          type: string
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+        pincode:
+          type: string
+          nullable: true
+          maxLength: 6
+        taluka:
+          type: integer
+      required:
+      - created_at
+      - id
+      - name
+      - taluka
+      - taluka_name
+      - updated_at
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+      required:
+      - email
+      - password
+      - role
+    LoginSuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/LoginTokenData'
+      required:
+      - data
+      - message
+      - success
+    LoginTokenData:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - access
+      - email
+      - refresh
+      - role
+    Logout:
+      type: object
+      properties:
+        refresh:
+          type: string
+      required:
+      - refresh
+    Profile:
+      type: object
+      properties:
+        full_name:
+          type: string
+          maxLength: 150
+        profile_picture:
+          type: string
+          format: uri
+          nullable: true
+        gender:
+          oneOf:
+          - $ref: '#/components/schemas/GenderEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        mobile_number:
+          type: string
+          readOnly: true
+        role:
+          type: string
+          readOnly: true
+      required:
+      - email
+      - mobile_number
+      - role
+    Register:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        mobile_number:
+          type: string
+          maxLength: 15
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        confirm_password:
+          type: string
+          writeOnly: true
+      required:
+      - confirm_password
+      - email
+      - mobile_number
+      - password
+      - role
+    RegisterSuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+      - message
+      - success
+    ResendOTP:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    ResetPassword:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        otp:
+          type: string
+          maxLength: 6
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        confirm_password:
+          type: string
+          writeOnly: true
+      required:
+      - confirm_password
+      - email
+      - otp
+      - password
+    RoleEnum:
+      enum:
+      - ADMIN
+      - EMPLOYER
+      - EMPLOYEE
+      type: string
+      description: |-
+        * `ADMIN` - Admin
+        * `EMPLOYER` - Employer
+        * `EMPLOYEE` - Employee
+    Skill:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
+    VerifyOTP:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        otp:
+          type: string
+          maxLength: 6
+          minLength: 6
+      required:
+      - email
+      - otp
+    VerifyResetOTP:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        otp:
+          type: string
+          maxLength: 6
+          minLength: 6
+      required:
+      - email
+      - otp
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

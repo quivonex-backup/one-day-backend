@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Razorpay Payment Test</title>
+
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .header p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #ffffff;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        .token-input {
+            font-family: monospace;
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .status.info {
+            display: block;
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .status.success {
+            display: block;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status.error {
+            display: block;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .result {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .result h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .result-value {
+            text-align: right;
+            word-break: break-all;
+            color: #111827;
+        }
+
+        .note {
+            margin-top: 20px;
+            padding: 14px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .role-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .result-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .result-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="header">
+            <h1>Razorpay Payment Test</h1>
+
+            <p>
+                Test Employee and Employer package payments
+            </p>
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ROLE -->
+        <!-- ================================================= -->
+
+        <div class="form-group">
+
+            <label for="userRole">
+                Select Role
+            </label>
+
+            <select id="userRole">
+
+                <option value="employee">
+                    Employee
+                </option>
+
+                <option value="employer">
+                    Employer
+                </option>
+
+            </select>
+
+            <div class="role-info">
+                Employee and Employer use different package APIs.
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- JWT -->
+        <!-- ================================================= -->
+
+        <div class="form-group">
+
+            <label for="accessToken">
+                JWT Access Token
+            </label>
+
+            <input
+                type="password"
+                id="accessToken"
+                class="token-input"
+                placeholder="Paste your JWT access token here"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- PACKAGE -->
+        <!-- ================================================= -->
+
+        <div class="form-group">
+
+            <label for="packageId">
+                Package ID
+            </label>
+
+            <input
+                type="number"
+                id="packageId"
+                value="1"
+                min="1"
+                placeholder="Enter package ID"
+            >
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- PAY BUTTON -->
+        <!-- ================================================= -->
+
+        <button
+            type="button"
+            id="payButton"
+            class="button"
+        >
+            Create Order & Pay
+        </button>
+
+
+        <!-- ================================================= -->
+        <!-- STATUS -->
+        <!-- ================================================= -->
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+
+        <!-- ================================================= -->
+        <!-- RESULT -->
+        <!-- ================================================= -->
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <h3>
+                Payment Information
+            </h3>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Role
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultRole"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Payment ID
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultPaymentId"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Razorpay Order ID
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultOrderId"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Razorpay Payment ID
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultRazorpayPaymentId"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Razorpay Signature
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultSignature"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Amount
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultAmount"
+                ></div>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <div class="result-label">
+                    Currency
+                </div>
+
+                <div
+                    class="result-value"
+                    id="resultCurrency"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- NOTE -->
+        <!-- ================================================= -->
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            This test page does not automatically call
+            <strong>/payments/verify/</strong>
+            after Razorpay Checkout.
+
+            You can therefore test the Razorpay webhook
+            independently.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =======================================================
+       API URLS
+       ======================================================= */
+
+    const EMPLOYEE_BUY_URL =
+        "/subscriptions/employee/buy-package/";
+
+    const EMPLOYER_BUY_URL =
+        "/subscriptions/employer/buy-package/";
+
+
+    /* =======================================================
+       DOM ELEMENTS
+       ======================================================= */
+
+    const userRole =
+        document.getElementById("userRole");
+
+    const accessToken =
+        document.getElementById("accessToken");
+
+    const packageId =
+        document.getElementById("packageId");
+
+    const payButton =
+        document.getElementById("payButton");
+
+    const statusBox =
+        document.getElementById("status");
+
+    const resultBox =
+        document.getElementById("result");
+
+
+    /* =======================================================
+       STATUS FUNCTION
+       ======================================================= */
+
+    function showStatus(
+        message,
+        type = "info"
+    ) {
+
+        statusBox.textContent = message;
+
+        statusBox.className =
+            "status " + type;
+
+    }
+
+
+    /* =======================================================
+       CLEAR RESULT
+       ======================================================= */
+
+    function clearResult() {
+
+        resultBox.style.display = "none";
+
+        document.getElementById(
+            "resultRole"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultPaymentId"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultOrderId"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultRazorpayPaymentId"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultSignature"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultAmount"
+        ).textContent = "";
+
+        document.getElementById(
+            "resultCurrency"
+        ).textContent = "";
+
+    }
+
+
+    /* =======================================================
+       SHOW PAYMENT RESULT
+       ======================================================= */
+
+    function showPaymentResult(
+        role,
+        data
+    ) {
+
+        resultBox.style.display = "block";
+
+        document.getElementById(
+            "resultRole"
+        ).textContent =
+            role;
+
+        document.getElementById(
+            "resultPaymentId"
+        ).textContent =
+            data.payment_id || "";
+
+        document.getElementById(
+            "resultOrderId"
+        ).textContent =
+            data.razorpay_order_id || "";
+
+        document.getElementById(
+            "resultRazorpayPaymentId"
+        ).textContent =
+            "";
+
+        document.getElementById(
+            "resultSignature"
+        ).textContent =
+            "";
+
+        document.getElementById(
+            "resultAmount"
+        ).textContent =
+            data.amount || "";
+
+        document.getElementById(
+            "resultCurrency"
+        ).textContent =
+            data.currency || "";
+
+    }
+
+
+    /* =======================================================
+       CREATE ORDER
+       ======================================================= */
+
+    async function createOrderAndPay() {
+
+        clearResult();
+
+        const token =
+            accessToken.value.trim();
+
+        const selectedPackageId =
+            packageId.value.trim();
+
+        const role =
+            userRole.value;
+
+
+        /* ---------------------------------------------------
+           VALIDATION
+           --------------------------------------------------- */
+
+        if (!token) {
+
+            showStatus(
+                "Please enter your JWT access token.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!selectedPackageId) {
+
+            showStatus(
+                "Please enter package ID.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /* ---------------------------------------------------
+           SELECT API URL
+           --------------------------------------------------- */
+
+        let buyPackageUrl;
+
+
+        if (role === "employee") {
+
+            buyPackageUrl =
+                EMPLOYEE_BUY_URL;
+
+        } else if (role === "employer") {
+
+            buyPackageUrl =
+                EMPLOYER_BUY_URL;
+
+        } else {
+
+            showStatus(
+                "Invalid role selected.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /* ---------------------------------------------------
+           BUTTON
+           --------------------------------------------------- */
+
+        payButton.disabled = true;
+
+        payButton.textContent =
+            "Creating Razorpay Order...";
+
+
+        showStatus(
+            "Creating package order...",
+            "info"
+        );
+
+
+        try {
+
+            /* -----------------------------------------------
+               CREATE BACKEND ORDER
+               ----------------------------------------------- */
+
+            const response =
+                await fetch(
+                    buyPackageUrl,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+                        },
+
+                        body: JSON.stringify({
+                            package_id:
+                                Number(
+                                    selectedPackageId
+                                )
+                        })
+                    }
+                );
+
+
+            /* -----------------------------------------------
+               READ RESPONSE
+               ----------------------------------------------- */
+
+            let data;
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch (error) {
+
+                throw new Error(
+                    "Server returned an invalid JSON response."
+                );
+
+            }
+
+
+            /* -----------------------------------------------
+               API ERROR
+               ----------------------------------------------- */
+
+            if (!response.ok) {
+
+                console.error(
+                    "Buy package API error:",
+                    data
+                );
+
+                const errorMessage =
+                    data.message ||
+                    data.detail ||
+                    "Unable to create payment order.";
+
+                throw new Error(
+                    errorMessage
+                );
+
+            }
+
+
+            /* -----------------------------------------------
+               BACKEND SUCCESS
+               ----------------------------------------------- */
+
+            console.log(
+                "Buy package response:",
+                data
+            );
+
+
+            const paymentData =
+                data.data || data;
+
+
+            const razorpayOrderId =
+                paymentData.razorpay_order_id;
+
+            const razorpayKeyId =
+                paymentData.razorpay_key_id;
+
+            const amount =
+                paymentData.amount;
+
+            const currency =
+                paymentData.currency ||
+                "INR";
+
+            const localPaymentId =
+                paymentData.payment_id;
+
+
+            /* -----------------------------------------------
+               VALIDATE REQUIRED DATA
+               ----------------------------------------------- */
+
+            if (!razorpayOrderId) {
+
+                throw new Error(
+                    "Razorpay order ID was not returned by backend."
+                );
+
+            }
+
+
+            if (!razorpayKeyId) {
+
+                throw new Error(
+                    "Razorpay key ID was not returned by backend."
+                );
+
+            }
+
+
+            if (!amount) {
+
+                throw new Error(
+                    "Payment amount was not returned by backend."
+                );
+
+            }
+
+
+            /* -----------------------------------------------
+               DISPLAY STATUS
+               ----------------------------------------------- */
+
+            showStatus(
+                "Order created successfully. Opening Razorpay Checkout...",
+                "success"
+            );
+
+
+            /* -----------------------------------------------
+               RAZORPAY CHECKOUT OPTIONS
+               ----------------------------------------------- */
+
+            const options = {
+
+                key:
+                    razorpayKeyId,
+
+                amount:
+                    Math.round(
+                        Number(amount) * 100
+                    ),
+
+                currency:
+                    currency,
+
+                name:
+                    "One Day Job Portal",
+
+                description:
+                    role === "employee"
+                        ? "Employee Package"
+                        : "Employer Package",
+
+                order_id:
+                    razorpayOrderId,
+
+
+                /* -------------------------------------------
+                   CHECKOUT HANDLER
+                   ------------------------------------------- */
+
+                handler:
+                    function (response) {
+
+                        console.log(
+                            "Razorpay Checkout response:",
+                            response
+                        );
+
+
+                        /* -----------------------------------
+                           IMPORTANT
+
+                           We intentionally do NOT call:
+
+                           /payments/verify/
+
+                           here.
+
+                           This lets us test the webhook
+                           independently.
+                           ----------------------------------- */
+
+
+                        showStatus(
+                            "Payment successful in Razorpay Checkout. Webhook should now be delivered to Django.",
+                            "success"
+                        );
+
+
+                        document.getElementById(
+                            "resultRole"
+                        ).textContent =
+                            role;
+
+
+                        document.getElementById(
+                            "resultPaymentId"
+                        ).textContent =
+                            localPaymentId || "";
+
+
+                        document.getElementById(
+                            "resultOrderId"
+                        ).textContent =
+                            response.razorpay_order_id ||
+                            razorpayOrderId;
+
+
+                        document.getElementById(
+                            "resultRazorpayPaymentId"
+                        ).textContent =
+                            response.razorpay_payment_id ||
+                            "";
+
+
+                        document.getElementById(
+                            "resultSignature"
+                        ).textContent =
+                            response.razorpay_signature ||
+                            "";
+
+
+                        document.getElementById(
+                            "resultAmount"
+                        ).textContent =
+                            amount;
+
+
+                        document.getElementById(
+                            "resultCurrency"
+                        ).textContent =
+                            currency;
+
+
+                        resultBox.style.display =
+                            "block";
+
+                    },
+
+
+                /* -------------------------------------------
+                   CHECKOUT MODAL CLOSE
+                   ------------------------------------------- */
+
+                modal: {
+
+                    ondismiss:
+                        function () {
+
+                            showStatus(
+                                "Razorpay Checkout was closed.",
+                                "info"
+                            );
+
+                        }
+
+                }
+
+            };
+
+
+            /* -----------------------------------------------
+               OPEN RAZORPAY
+               ----------------------------------------------- */
+
+            const razorpay =
+                new Razorpay(options);
+
+
+            /* -----------------------------------------------
+               PAYMENT FAILED
+               ----------------------------------------------- */
+
+            razorpay.on(
+                "payment.failed",
+                function (response) {
+
+                    console.error(
+                        "Razorpay payment failed:",
+                        response
+                    );
+
+
+                    let errorMessage =
+                        "Payment failed.";
+
+
+                    if (
+                        response &&
+                        response.error
+                    ) {
+
+                        const error =
+                            response.error;
+
+
+                        errorMessage =
+                            error.description ||
+                            error.reason ||
+                            "Payment failed.";
+
+                    }
+
+
+                    showStatus(
+                        errorMessage +
+                        "\n\n" +
+                        "The payment.failed webhook should now be delivered to Django.",
+                        "error"
+                    );
+
+                }
+            );
+
+
+            razorpay.open();
+
+
+        } catch (error) {
+
+            console.error(
+                "Payment error:",
+                error
+            );
+
+
+            showStatus(
+                error.message ||
+                "Something went wrong.",
+                "error"
+            );
+
+        } finally {
+
+            payButton.disabled = false;
+
+            payButton.textContent =
+                "Create Order & Pay";
+
+        }
+
+    }
+
+
+    /* =======================================================
+       BUTTON CLICK
+       ======================================================= */
+
+    payButton.addEventListener(
+        "click",
+        createOrderAndPay
+    );
+
+
+    /* =======================================================
+       ROLE CHANGE
+       ======================================================= */
+
+    userRole.addEventListener(
+        "change",
+        function () {
+
+            clearResult();
+
+            showStatus(
+                "Selected role: " +
+                userRole.value.toUpperCase(),
+                "info"
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
